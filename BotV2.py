@@ -524,7 +524,7 @@ def update_bet_sequence(user_id, result):
             new_index = 0  # Win ရင် အစပြန်စ
             print(f"🔧 DEBUG: WIN - Reset index to 0")
         else:
-            # Loss ရင် နောက်တစ်ဆင့်သို့
+            # Loss ရင် နောက်တစ်ဆင့်သို့
             new_index = current_index + 1
             print(f"🔧 DEBUG: LOSE - Current index: {current_index} -> New index: {new_index}")
             
@@ -1285,7 +1285,8 @@ def get_main_keyboard(user_id=None):
         [KeyboardButton(button_texts['bet_big']), KeyboardButton(button_texts['bet_small'])],
         [KeyboardButton(button_texts['bet_red']), KeyboardButton(button_texts['bet_green']), KeyboardButton(button_texts['bet_violet'])],
         [KeyboardButton(button_texts['bot_settings']), KeyboardButton(button_texts['my_bets'])],
-        [KeyboardButton(button_texts['sl_layer']), KeyboardButton(button_texts['language']), KeyboardButton(button_texts['bot_info'])],  # NEW: Added Bot Info
+        [KeyboardButton(button_texts['sl_layer'])],
+         [KeyboardButton(button_texts['language']), KeyboardButton(button_texts['bot_info'])],  # NEW: Added Bot Info
         [KeyboardButton(button_texts['run_bot']), KeyboardButton(button_texts['stop_bot'])]
     ]
     return ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
@@ -1992,7 +1993,7 @@ async def balance_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 **Balance:** {balance:,.0f} K
 **Status:** 🟢 LOGGED IN
 
-Last update: {datetime.now().strftime("%H:%M:%S")}
+
         """
         await update.message.reply_text(balance_text, parse_mode='Markdown')
     except Exception as e:
@@ -2039,7 +2040,7 @@ async def results_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         
 
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        results_text += f"\n🕐 Last updated: {current_time}"
+        results_text += f"\n"
         
         await update.message.reply_text(results_text, parse_mode='Markdown')
     except Exception as e:
@@ -2608,7 +2609,7 @@ async def run_bot_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
             
             # If user has default SL pattern, completely disable SL Layer
             if sl_pattern_data['pattern'] == '1,2,3,4,5':
-                print(f"🔧 DEBUG: Default SL pattern detected - SL Layer COMPLETELY DISABLED")
+                print(f"🔧 DEBUG: Default SL pattern detected - SL Layer DISABLED")
         
         if use_sl_layer:
             # Run SL Bot
@@ -2654,14 +2655,14 @@ async def run_bot_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         mode_details = mode_text
     
     # ✅ FIXED: Show clear SL Layer status
-    sl_status = "🔴 COMPLETELY DISABLED"
+    sl_status = "🔴 DISABLED"
     
     await update.message.reply_text(
         f"🤖 **Auto Bot Started!**\n\n"
         f"**Mode:** {mode_text}\n"
         f"**SL Layer:** {sl_status}\n"
         f"**Status:** 🟢 RUNNING\n\n"
-        f"Bot will start placing bets automatically.\n"
+        f"\n"
         f"{mode_details}",
         parse_mode='Markdown'
     )
@@ -2712,7 +2713,7 @@ async def run_sl_bot_integrated(update: Update, context: ContextTypes.DEFAULT_TY
     if user_id not in processed_issues:
         processed_issues[user_id] = set()
     
-    mode_text = "🟢 WAIT BOT" if sl_session['is_wait_mode'] else "🔵 BETTING"
+    mode_text = "🟢 WAIT BOT" if sl_session['is_wait_mode'] else "🔵 Betting"
     
     pattern_list = [int(x.strip()) for x in sl_pattern_data['pattern'].split(',')]
     current_wait_loss_limit = pattern_list[sl_pattern_data['current_index']] if sl_pattern_data['current_index'] < len(pattern_list) else pattern_list[-1]
@@ -2730,13 +2731,11 @@ async def run_sl_bot_integrated(update: Update, context: ContextTypes.DEFAULT_TY
         f"🤖 **SL Layer Bot Started!**\n\n"
         f"**BS/Colour Pattern Mode:** 🟢 Active\n"
         f"**SL Pattern:** {sl_pattern_data['pattern']}\n"
-        f"**Starting at:** SL {sl_pattern_data['current_sl']}\n"
         f"**Mode:** {mode_text}\n"
-        f"**Status:** {status_details}\n"
         f"**Bet Sequence:** {bet_sequence}\n"
         f"**Starting Bet:** {current_amount} K\n\n"
         f"**Bot Status:** 🟢 RUNNING\n\n"
-        f"Bot will now start with {mode_text} mode for SL {sl_pattern_data['current_sl']}.",
+        f"",
         parse_mode='Markdown'
     )
     
@@ -2778,10 +2777,8 @@ async def stop_bot_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     await update.message.reply_text(
         f"🛑 **{bot_type} Stopped!**\n\n"
-        f"**Mode:** {current_mode}\n"
-        f"**Status:** 🔴 STOPPED\n\n"
-        f"All betting activities have been stopped immediately.\n"
-        f"Pending bets have been cleared.",
+       
+        f"",
         parse_mode='Markdown'
     )
 
@@ -3080,7 +3077,7 @@ async def bot_settings_command(update: Update, context: ContextTypes.DEFAULT_TYP
         sl_layer_status = "🟢 READY (Will activate on bot start)" if (
             sl_pattern_active and 
             (patterns_data['bs_pattern'] or patterns_data['colour_pattern'])
-        ) else "🔴 NOT READY"
+        ) else "🔴 Not Ready"
         
         sl_pattern_status = f"✅ {sl_pattern_data['pattern']} (SL {sl_pattern_data['current_sl']})" if sl_pattern_active else "❌ Not set"
         
@@ -3126,7 +3123,6 @@ async def bot_settings_command(update: Update, context: ContextTypes.DEFAULT_TYP
 
 **Target Settings:**
 {target_info}
-
 **Bot Statistics:**
 • Session Profit: {bot_session['session_profit']:,} K
 • Session Loss: {bot_session['session_loss']:,} K
@@ -3322,7 +3318,7 @@ async def sl_layer_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         active_pattern_type = "BS Formula" if bs_pattern_active else "Colour Formula"
         active_pattern = patterns_data['bs_pattern'] if bs_pattern_active else patterns_data['colour_pattern']
         
-        overall_status = "🟢 READY FOR SL LAYER" if ready_for_sl else "🔴 NOT READY"
+        overall_status = "🟢 READY FOR SL LAYER" if ready_for_sl else "🔴 Not Ready"
         
         sl_info = f"""
 📋 **SL Layer Bot System** - {overall_status}
@@ -3335,13 +3331,6 @@ async def sl_layer_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 **Current SL Pattern:** {pattern_text}
 **Current SL Level:** {current_sl}
-
-**Auto Detection:**
-• When you press **🤖 Run Bot**:
-• System checks all conditions automatically
-• If ready → SL Layer activates
-• If not ready → Normal Bot runs
-• No manual switching needed!
 
 Manage your SL Pattern:
     """
@@ -3609,12 +3598,6 @@ async def check_sl_bet_result(user_id: str, context: ContextTypes.DEFAULT_TYPE, 
                 win_message = f"""
 🟢 **WAIT BOT WIN**
 
-**Issue:** {issue}
-**Bet Type:** {bet_type_str.split('(')[0].strip()}
-**Result:** WIN
-**Total Win:** {total_win_amount:,} K
-**Wait Loss Count Reset:** 0/{current_wait_loss_limit}
-
 **Total Profit:** {total_profit:,} K 🏆🏆🏆
                 """
                 
@@ -3631,13 +3614,6 @@ async def check_sl_bet_result(user_id: str, context: ContextTypes.DEFAULT_TYPE, 
                 # LOSS Message for Wait Bot Mode
                 loss_message = f"""
 🔴 **WAIT BOT LOSS**
-
-**Issue:** {issue}
-**Bet Type:** {bet_type_str.split('(')[0].strip()}
-**Result:** LOSS
-**Wait Loss Count:** {new_wait_loss_count}/{current_wait_loss_limit}
-
-**Total Profit:** {total_profit:,} K 🏆🏆🏆
                 """
                 
                 await context.bot.send_message(
@@ -3653,12 +3629,6 @@ async def check_sl_bet_result(user_id: str, context: ContextTypes.DEFAULT_TYPE, 
                     
                     transition_message = f"""
 🔵 **Wait Loss Limit Reached!**
-
-**Wait Loss Count:** {new_wait_loss_count}/{current_wait_loss_limit}
-**Action:** Switching to BETTING MODE
-**Next:** Betting 3 times with BS/Colour Pattern
-
-**Total Profit:** {total_profit:,} K 🏆🏆🏆
                     """
                     
                     await context.bot.send_message(
@@ -3692,16 +3662,6 @@ async def check_sl_bet_result(user_id: str, context: ContextTypes.DEFAULT_TYPE, 
                 win_message = f"""
 🟢 **BET RESULT UPDATE**
 
-**Issue:** {issue}
-**Bet Type:** {bet_type_str.split('(')[0].strip()}
-**Amount:** {amount:,} K
-**Result:** WIN
-**Win Amount:** {profit_loss:,} K
-**Total Win:** {total_win_amount:,} K
-**Action:** SL Change → Back to SL {first_sl} ({mode_text})
-
-{sequence_info}
-
 **Total Profit:** {total_profit:,} K 🏆🏆🏆
                 """
                 
@@ -3715,15 +3675,6 @@ async def check_sl_bet_result(user_id: str, context: ContextTypes.DEFAULT_TYPE, 
                 # ✅ FIXED: LOSS Message for Betting Mode with CORRECT bet count
                 loss_message = f"""
 🔴 **BET RESULT UPDATE**
-
-**Issue:** {issue}
-**Bet Type:** {bet_type_str.split('(')[0].strip()}
-**Amount:** {amount:,} K
-**Result:** LOSS
-**Loss Amount:** {amount:,} K
-**Bet Count:** {new_bet_count}/3
-
-{sequence_info}
 
 **Total Profit:** {total_profit:,} K 🏆🏆🏆
                 """
@@ -3982,15 +3933,7 @@ async def check_single_bet_result(user_id: str, context: ContextTypes.DEFAULT_TY
             result_message = f"""
 {result_emoji} **BET RESULT UPDATE**
 
-**Issue:** {issue}
-**Bet Type:** {bet_type_str.split('(')[0].strip()}
-**Amount:** {amount:,} K
-**Result:** {result_text}
-**Profit/Loss:** {profit_text}
-{win_details}
-{sequence_info}
-
-**Total Profit:** {bot_session['total_profit']:,} K🏆🏆🏆
+**Total Profit:** {total_profit:,} K 🏆🏆🏆
             """
             
             await context.bot.send_message(chat_id=int(user_id), text=result_message, parse_mode='Markdown')
@@ -4374,7 +4317,6 @@ async def bot_info_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 • Colour Pattern: {colour_pattern}
 • SL Pattern: {sl_pattern}
 
-🕐 **Last Update:** {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
         """
         
         await update.message.reply_text(bot_info_text, parse_mode='Markdown')
