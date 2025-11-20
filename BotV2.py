@@ -12,7 +12,7 @@ from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboard
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes, CallbackContext, CallbackQueryHandler
 
 # Bot configuration
-BOT_TOKEN = "7992078064:AAEEesWzKJz_Y61RmTXGIqXvbJZFyOqmz3k"
+BOT_TOKEN = "8434902642:AAGv2UMoeexZftLWvRZzTaFZMmR_dgl6mAo"
 
 # Channel configuration
 CHANNEL_USERNAME = "@Vipsafesingalchannel298"
@@ -3661,10 +3661,6 @@ async def check_sl_bet_result(user_id: str, context: ContextTypes.DEFAULT_TYPE, 
                 win_message = f"""
 🟢 BET RESULT UPDATE
 
-Issue: {issue}
-Bet Type: {bet_type_str.split('(')[0].strip()}
-Amount: {amount:,} K
-
 Total Profit: {bot_session['total_profit']:,} K 🏆🏆🏆
             """
                 
@@ -3678,10 +3674,6 @@ Total Profit: {bot_session['total_profit']:,} K 🏆🏆🏆
                 # ✅ FIXED: LOSS Message for Betting Mode with CORRECT bet count
                 loss_message = f"""
 🔴 BET RESULT UPDATE
-
-Issue: {issue}
-Bet Type: {bet_type_str.split('(')[0].strip()}
-Amount: {amount:,} K
 
 Total Profit: {bot_session['total_profit']:,} K 🏆🏆🏆
             """
@@ -3939,10 +3931,6 @@ async def check_single_bet_result(user_id: str, context: ContextTypes.DEFAULT_TY
             
             result_message = f"""
 {result_emoji} BET RESULT UPDATE
-
-Issue: {issue}
-Bet Type: {bet_type_str.split('(')[0].strip()}
-Amount: {amount:,} K
 
 Total Profit: {bot_session['total_profit']:,} K 🏆🏆🏆
             """
