@@ -2662,7 +2662,6 @@ async def run_bot_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"**Mode:** {mode_text}\n"
         f"**SL Layer:** {sl_status}\n"
         f"**Status:** 🟢 RUNNING\n\n"
-        f"\n"
         f"{mode_details}",
         parse_mode='Markdown'
     )
@@ -3598,8 +3597,8 @@ async def check_sl_bet_result(user_id: str, context: ContextTypes.DEFAULT_TYPE, 
                 win_message = f"""
 🟢 **WAIT BOT WIN**
 
-**Total Profit:** {total_profit:,} K 🏆🏆🏆
                 """
+                
                 
                 await context.bot.send_message(
                     chat_id=int(user_id),
@@ -3660,10 +3659,14 @@ async def check_sl_bet_result(user_id: str, context: ContextTypes.DEFAULT_TYPE, 
                 
                 # ✅ FIXED: WIN Message for Betting Mode
                 win_message = f"""
-🟢 **BET RESULT UPDATE**
+🟢 BET RESULT UPDATE
 
-**Total Profit:** {total_profit:,} K 🏆🏆🏆
-                """
+Issue: {issue}
+Bet Type: {bet_type_str.split('(')[0].strip()}
+Amount: {amount:,} K
+
+Total Profit: {bot_session['total_profit']:,} K 🏆🏆🏆
+            """
                 
                 await context.bot.send_message(
                     chat_id=int(user_id),
@@ -3674,10 +3677,14 @@ async def check_sl_bet_result(user_id: str, context: ContextTypes.DEFAULT_TYPE, 
             else:
                 # ✅ FIXED: LOSS Message for Betting Mode with CORRECT bet count
                 loss_message = f"""
-🔴 **BET RESULT UPDATE**
+🔴 BET RESULT UPDATE
 
-**Total Profit:** {total_profit:,} K 🏆🏆🏆
-                """
+Issue: {issue}
+Bet Type: {bet_type_str.split('(')[0].strip()}
+Amount: {amount:,} K
+
+Total Profit: {bot_session['total_profit']:,} K 🏆🏆🏆
+            """
                 
                 await context.bot.send_message(
                     chat_id=int(user_id),
@@ -3699,7 +3706,7 @@ async def check_sl_bet_result(user_id: str, context: ContextTypes.DEFAULT_TYPE, 
                     mode_text = "WAIT BOT" if is_wait_mode else "BETTING"
                     await context.bot.send_message(
                         chat_id=int(user_id),
-                        text=f"\n\n**🎯 SL LEVEL CHANGE**\nCompleted 3 bets → Moving to SL {new_sl} ({mode_text})",
+                        text=f"\n\n",
                         parse_mode='Markdown'
                     )
         
@@ -3931,11 +3938,15 @@ async def check_single_bet_result(user_id: str, context: ContextTypes.DEFAULT_TY
             bot_session = get_bot_session(user_id)
             
             result_message = f"""
-{result_emoji} **BET RESULT UPDATE**
+{result_emoji} BET RESULT UPDATE
 
-**Total Profit:** {total_profit:,} K 🏆🏆🏆
+Issue: {issue}
+Bet Type: {bet_type_str.split('(')[0].strip()}
+Amount: {amount:,} K
+
+Total Profit: {bot_session['total_profit']:,} K 🏆🏆🏆
             """
-            
+        
             await context.bot.send_message(chat_id=int(user_id), text=result_message, parse_mode='Markdown')
             
             # ✅ NEW: Wait for user to read the message
