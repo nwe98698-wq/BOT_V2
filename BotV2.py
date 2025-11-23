@@ -12,7 +12,7 @@ from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboard
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes, CallbackContext, CallbackQueryHandler
 
 # Bot configuration
-BOT_TOKEN = "8434902642:AAGv2UMoeexZftLWvRZzTaFZMmR_dgl6mAo"
+BOT_TOKEN = "7968178268:AAFd5Zp7-YEnwqyX81g7lLdgVHhnWkODwaI"
 
 # Channel configuration
 CHANNEL_USERNAME = "@Vipsafesingalchannel298"
@@ -110,7 +110,7 @@ def init_database():
                 random_betting TEXT DEFAULT 'bot',
                 profit_target INTEGER DEFAULT 0,
                 loss_target INTEGER DEFAULT 0,
-                language TEXT DEFAULT 'english',  -- NEW: Language setting
+                language TEXT DEFAULT 'english',  # NEW: Language setting
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         ''')
@@ -1068,12 +1068,16 @@ def get_localized_message(message_key, language='english'):
     """Get localized message based on language"""
     messages = {
         'english': {
+            # Main menu messages
             'welcome': "🎰 **Auto Lottery Bot** 🎯\n\nWelcome!",
             'login_success': "✅ **Login Successful!**",
             'bet_placed': "✅ **Bet Placed Successfully!**",
             'balance': "💰 Balance",
             'language_set': "✅ **Language set to English** 🇺🇸\n\nAll bot messages will now be displayed in English.",
             'choose_language': "🌐 **Choose Your Language**\n\nPlease select your preferred language:",
+            'back_main_menu': "↩️ Main Menu",
+            
+            # Bot Settings messages
             'bot_settings': "⚙️ Bot Setting",
             'random_big': "🎲 Random BIG",
             'random_small': "🎯 Random SMALL",
@@ -1086,10 +1090,52 @@ def get_localized_message(message_key, language='english'):
             'profit_target': "🎯 Profit Target",
             'loss_target': "🎯 Loss Target",
             'reset_stats': "🔄 Reset Stats",
-            'back_main_menu': "↩️ Main Menu",
+            
+            # Login messages
             'ck_login': "🔐 CK Login",
             'bigwin_login': "🔐 777 Login",
             'six_login': "🔐 6 Login",
+            'enter_phone': "Please enter your phone number (without country code):",
+            'enter_password': "Please enter your password:",
+            'phone_saved': "✅ Phone number saved: {phone}\nPlatform: {platform}\nNow please enter your password:",
+            'password_saved': "✅ Password saved!\nPlatform: {platform}\nClick '🚪 Login Now' to authenticate and save credentials.",
+            'login_guide': "🔐 **{platform} Login**\n\nPlease follow these steps:\n\n1. Click '📝 Enter Phone' and send your phone number\n2. Click '🔑 Enter Password' and send your password\n3. Click '🚪 Login Now' to authenticate\n\n**Your credentials will be saved for future use!**",
+            'auto_login_loading': "🔄 Auto logging in...",
+            'manual_login_loading': "🔄 Logging in... Please wait.",
+            'login_success_details': "✅ **Login Successful!**\n\n**Platform:** {platform}\n**User ID:** {user_id}\n**Account:** {phone}\n**Balance:** {balance:,} K",
+            
+            # Balance messages
+            'balance_title': "💰 **Account Information**",
+            'balance_details': "**Platform:** {platform}\n**User ID:** {user_id}\n**Balance:** {balance:,} K\n**Status:** 🟢 LOGGED IN",
+            
+            # Bot Info messages
+            'bot_info_title': "🤖 **BOT INFORMATION**",
+            'user_info_section': "👤 **User Info:**",
+            'bot_settings_section': "⚙️ **Bot Settings:**", 
+            'target_settings_section': "🎯 **Target Settings:**",
+            'bot_stats_section': "📊 **Bot Statistics:**",
+            'patterns_section': "📋 **Patterns:**",
+            'user_id': "User ID",
+            'phone': "Phone", 
+            'platform': "Platform",
+            'balance': "Balance",
+            'mode': "Mode",
+            'status': "Status",
+            'bet_sequence': "Bet Sequence",
+            'current_bet': "Current Bet",
+            'session_profit': "Session Profit",
+            'session_loss': "Session Loss", 
+            'net_profit': "Net Profit",
+            'total_bets': "Total Bets",
+            'bs_pattern': "BS Pattern",
+            'colour_pattern': "Colour Pattern",
+            'sl_pattern': "SL Pattern",
+            'not_set': "Not set",
+            'profit_target': "Profit Target",
+            'loss_target': "Loss Target",
+            'disabled': "Disabled",
+            
+            # Betting messages
             'results': "📊 Results",
             'bet_big': "🎲 Bet BIG",
             'bet_small': "🎯 Bet SMALL",
@@ -1097,19 +1143,67 @@ def get_localized_message(message_key, language='english'):
             'bet_green': "🟢 Bet GREEN",
             'bet_violet': "🟣 Bet VIOLET",
             'my_bets': "📈 My Bets",
+            
+            # SL Layer messages
             'sl_layer': "📋 SL Layer",
+            
+            # Control messages
             'language': "🌐 Language",
             'run_bot': "🤖 Run Bot",
             'stop_bot': "🛑 Stop Bot",
-            'bot_info': "🤖 Bot Info",  # NEW: Bot Info button text
+            'bot_info': "🤖 Bot Info",
+            
+            # BS Formula messages
+            'bs_formula_title': "📋 **BS Formula Pattern Mode**",
+            'bs_formula_description': "• 📋 BS Formula - Follow BS Pattern (B,S only)",
+            'bs_pattern_set': "✅ **BS Pattern Set Successfully!**",
+            'enter_bs_pattern': "🔢 **Set BS Pattern for BS Formula Mode**",
+            'bs_pattern_instructions': "Enter your BS pattern using ONLY B for BIG and S for SMALL:",
+            'current_bs_pattern': "👀 **Current BS Pattern**",
+            'bs_pattern_cleared': "🗑️ **BS Pattern Cleared**",
+            
+            # Colour Formula messages
+            'colour_formula_title': "🔮 **Colour Formula Pattern Mode**",
+            'colour_formula_description': "• 🔮 Colour Formula - Follow Colour Pattern (G,R,V only)",
+            'colour_pattern_set': "✅ **Colour Pattern Set Successfully!**",
+            'enter_colour_pattern': "🔢 **Set Colour Pattern for Colour Formula Mode**",
+            'colour_pattern_instructions': "Enter your Colour pattern using ONLY G for GREEN, R for RED, V for VIOLET:",
+            'current_colour_pattern': "👀 **Current Colour Pattern**",
+            'colour_pattern_cleared': "🗑️ **Colour Pattern Cleared**",
+            
+            # SL Layer messages
+            'sl_layer_title': "📋 **SL Layer Bot System**",
+            'sl_pattern_set': "✅ **SL Pattern Set Successfully!**",
+            'enter_sl_pattern': "🔢 **Set SL Pattern**",
+            'sl_pattern_instructions': "Enter your SL pattern (comma separated numbers 1-5):",
+            'current_sl_pattern': "👀 **Current SL Pattern**",
+            'sl_pattern_reset': "🔄 **SL Pattern Reset!**",
+            
+            # Bot Settings detailed messages
+            'random_big_set': "✅ **Random Mode Set**\n\n• 🎲 Random BIG - Always bet BIG",
+            'random_small_set': "✅ **Random Mode Set**\n\n• 🎯 Random SMALL - Always bet SMALL",
+            'random_bot_set': "✅ **Random Mode Set**\n\n• 🔄 Random Bot - Random BIG/SMALL",
+            'follow_bot_set': "✅ **Random Mode Set**\n\n• 📈 Follow Bot - Follow Last Result",
+            
+            # Error messages
+            'please_login': "❌ Please login first!",
+            'insufficient_balance': "❌ Insufficient balance!",
+            'bet_failed': "❌ Bet failed:",
+            'auto_login_failed': "❌ Auto login failed:",
+            'get_balance_error': "❌ Error getting balance: {error}",
+            'bot_info_error': "❌ Error loading bot information. Please try again.",
         },
         'burmese': {
+            # Main menu messages
             'welcome': "🎰 **အလိုအလျောက် ထီဘော့** 🎯\n\nကြိုဆိုပါတယ်!",
             'login_success': "✅ **လော့ဂ်အင် အောင်မြင်ပါတယ်**",
             'bet_placed': "✅ **ထီထိုးပြီးပါပြီ**",
             'balance': "💰 ပိုက်ဆံ",
             'language_set': "✅ **ဘာသာစကား ပြောင်းလဲပြီးပါပြီ** 🇲🇲\n\nဘော့သတင်းစကားအားလုံးကို မြန်မာဘာသာဖြင့် ပြသပေးပါမည်။",
             'choose_language': "🌐 **ဘာသာစကား ရွေးချယ်ပါ**\n\nကျေးဇူးပြု၍ သင့်နှစ်သက်ရာ ဘာသာစကားကို ရွေးချယ်ပါ:",
+            'back_main_menu': "↩️ ပင်မမီနူး",
+            
+            # Bot Settings messages
             'bot_settings': "⚙️ ဘော့ ဆက်တင်များ",
             'random_big': "🎲 ကြီးတစ်ခုတည်း",
             'random_small': "🎯 သေးတစ်ခုတည်း",
@@ -1122,10 +1216,52 @@ def get_localized_message(message_key, language='english'):
             'profit_target': "🎯 အမြတ်ပန်းတိုင်",
             'loss_target': "🎯 အရှုံးပန်းတိုင်",
             'reset_stats': "🔄 စာရင်းများ ပြန်လည်သတ်မှတ်ရန်",
-            'back_main_menu': "↩️ ပင်မမီနူး",
+            
+            # Login messages
             'ck_login': "🔐 CK လော့ဂ်အင်",
             'bigwin_login': "🔐 777 လော့ဂ်အင်",
-            'six_login': "🔐 6 လော့ဂ်အင်",
+            'six_login': "🔐 6 လော့ဂ်အင်", 
+            'enter_phone': "ကျေးဇူးပြု၍ သင့်ဖုန်းနံပါတ်ကို ထည့်သွင်းပါ (နိုင်ငံကုဒ်မပါ):",
+            'enter_password': "ကျေးဇူးပြု၍ သင့်စကားဝှက်ကို ထည့်သွင်းပါ:",
+            'phone_saved': "✅ ဖုန်းနံပါတ် သိမ်းဆည်းပြီးပါပြီ: {phone}\nပလက်ဖောင်း: {platform}\nကျေးဇူးပြု၍ သင့်စကားဝှက်ကို ထည့်သွင်းပါ:",
+            'password_saved': "✅ စကားဝှက် သိမ်းဆည်းပြီးပါပြီ!\nပလက်ဖောင်း: {platform}\nစက်ဝင်ရန် '🚪 Login Now' ကိုနှိပ်ပါ။",
+            'login_guide': "🔐 **{platform} လော့ဂ်အင်**\n\nကျေးဇူးပြု၍ ဤအဆင့်များကို လိုက်နာပါ:\n\n၁။ '📝 Enter Phone' ကိုနှိပ်၍ ဖုန်းနံပါတ်ပေးပို့ပါ\n၂။ '🔑 Enter Password' ကိုနှိပ်၍ စကားဝှက်ပေးပို့ပါ\n၃။ '🚪 Login Now' ကိုနှိပ်၍ အတည်ပြုပါ\n\n**သင့်အထောက်အထားများကို နောက်လိုအပ်ချိန်အတွက် သိမ်းဆည်းထားပါမည်!**",
+            'auto_login_loading': "🔄 အလိုအလျောက် လော့ဂ်အင် ဝင်နေပါသည်...",
+            'manual_login_loading': "🔄 လော့ဂ်အင် ဝင်နေပါသည်... ကျေးဇူးပြု၍ ခဏစောင့်ပါ။",
+            'login_success_details': "✅ **လော့ဂ်အင် အောင်မြင်ပါတယ်**\n\n**ပလက်ဖောင်း:** {platform}\n**အသုံးပြုသင် ID:** {user_id}\n**အကောင့်:** {phone}\n**ပိုက်ဆံ:** {balance:,} သိန်း",
+            
+            # Balance messages
+            'balance_title': "💰 **အကောင့် အချက်အလက်**",
+            'balance_details': "**ပလက်ဖောင်း:** {platform}\n**အသုံးပြုသင် ID:** {user_id}\n**ပိုက်ဆံ:** {balance:,} သိန်း\n**အခြေအနေ:** 🟢 လော့ဂ်အင် ဝင်ပြီး",
+            
+            # Bot Info messages
+            'bot_info_title': "🤖 **ဘော့ အချက်အလက်**",
+            'user_info_section': "👤 **အသုံးပြုသင် အချက်အလက်:**",
+            'bot_settings_section': "⚙️ **ဘော့ ဆက်တင်များ:**",
+            'target_settings_section': "🎯 **ပန်းတိုင် ဆက်တင်များ:**",
+            'bot_stats_section': "📊 **ဘော့ စာရင်းဇယား:**",
+            'patterns_section': "📋 **ပုံစံများ:**",
+            'user_id': "အသုံးပြုသင် ID",
+            'phone': "ဖုန်းနံပါတ်",
+            'platform': "ပလက်ဖောင်း",
+            'balance': "ပိုက်ဆံ",
+            'mode': "မုဒ်",
+            'status': "အခြေအနေ",
+            'bet_sequence': "ထိုးကြေးအစဉ်",
+            'current_bet': "လက်ရှိထိုးကြေး",
+            'session_profit': "အပိုင်းအမြတ်",
+            'session_loss': "အပိုင်းအရှုံး",
+            'net_profit': "အသားတင်အမြတ်",
+            'total_bets': "စုစုပေါင်းထိုးငွေ",
+            'bs_pattern': "BS ပုံစံ",
+            'colour_pattern': "အရောင် ပုံစံ",
+            'sl_pattern': "SL ပုံစံ",
+            'not_set': "မသတ်မှတ်ရသေး",
+            'profit_target': "အမြတ်ပန်းတိုင်",
+            'loss_target': "အရှုံးပန်းတိုင်",
+            'disabled': "မဖွင့်ထား",
+            
+            # Betting messages
             'results': "📊 ရလဒ်များ",
             'bet_big': "🎲 ကြီးထိုးရန်",
             'bet_small': "🎯 သေးထိုးရန်",
@@ -1133,119 +1269,55 @@ def get_localized_message(message_key, language='english'):
             'bet_green': "🟢 အစိမ်းထိုးရန်",
             'bet_violet': "🟣 ခရမ်းထိုးရန်",
             'my_bets': "📈 ကျွန်ုပ်၏ထိုးငွေများ",
+            
+            # SL Layer messages
             'sl_layer': "📋 SL Layer",
+            
+            # Control messages
             'language': "🌐 ဘာသာစကား",
             'run_bot': "🤖 ဘော့စတင်ရန်",
             'stop_bot': "🛑 ဘော့ရပ်ရန်",
-            'bot_info': "🤖 ဘော့အချက်အလက်",  # NEW: Bot Info button text
-        },
-        'chinese': {
-            'welcome': "🎰 **自动彩票机器人** 🎯\n\n欢迎！",
-            'login_success': "✅ **登录成功！**",
-            'bet_placed': "✅ **投注成功！**",
-            'balance': "💰 账户信息",
-            'language_set': "✅ **语言已设置为中文** 🇨🇳\n\n所有机器人消息现在将以中文显示。",
-            'choose_language': "🌐 **选择您的语言**\n\n请选择您偏好的语言:",
-            'bot_settings': "⚙️ 机器人设置",
-            'random_big': "🎲 只投注大",
-            'random_small': "🎯 只投注小",
-            'random_bot': "🔄 随机大小",
-            'follow_bot': "📈 跟随最后结果",
-            'bs_formula': "📋 BS 公式",
-            'colour_formula': "🔮 颜色公式",
-            'bot_stats': "📊 机器人统计",
-            'set_bet_sequence': "🔢 设置投注序列",
-            'profit_target': "🎯 盈利目标",
-            'loss_target': "🎯 亏损目标",
-            'reset_stats': "🔄 重置统计",
-            'back_main_menu': "↩️ 主菜单",
-            'ck_login': "🔐 CK 登录",
-            'bigwin_login': "🔐 777 登录",
-            'six_login': "🔐 6 登录",
-            'results': "📊 结果",
-            'bet_big': "🎲 投注大",
-            'bet_small': "🎯 投注小",
-            'bet_red': "🔴 投注红",
-            'bet_green': "🟢 投注绿",
-            'bet_violet': "🟣 投注紫",
-            'my_bets': "📈 我的投注",
-            'sl_layer': "📋 SL 层",
-            'language': "🌐 语言",
-            'run_bot': "🤖 运行机器人",
-            'stop_bot': "🛑 停止机器人",
-            'bot_info': "🤖 机器人信息",  # NEW: Bot Info button text
-        },
-        'thai': {
-            'welcome': "🎰 **บอตลอตเตอรี่อัตโนมัติ** 🎯\n\nยินดีต้อนรับ!",
-            'login_success': "✅ **เข้าสู่ระบบสำเร็จ!**",
-            'bet_placed': "✅ **วางเดิมพันสำเร็จ!**",
-            'balance': "💰 ข้อมูลบัญชี",
-            'language_set': "✅ **ตั้งค่าภาษาเป็นไทยแล้ว** 🇹🇭\n\nข้อความบอททั้งหมดจะแสดงเป็นภาษาไทย",
-            'choose_language': "🌐 **เลือกภาษาของคุณ**\n\nกรุณาเลือกภาษาที่คุณต้องการ:",
-            'bot_settings': "⚙️ การตั้งค่าบอท",
-            'random_big': "🎲 สุ่มใหญ่เท่านั้น",
-            'random_small': "🎯 สุ่มเล็กเท่านั้น",
-            'random_bot': "🔄 สุ่มใหญ่/เล็ก",
-            'follow_bot': "📈 ตามผลล่าสุด",
-            'bs_formula': "📋 สูตร BS",
-            'colour_formula': "🔮 สูตรสี",
-            'bot_stats': "📊 สถิติบอท",
-            'set_bet_sequence': "🔢 ตั้งลำดับการเดิมพัน",
-            'profit_target': "🎯 เป้าหมายกำไร",
-            'loss_target': "🎯 เป้าหมายขาดทุน",
-            'reset_stats': "🔄 รีเซ็ตสถิติ",
-            'back_main_menu': "↩️ เมนูหลัก",
-            'ck_login': "🔐 CK เข้าสู่ระบบ",
-            'bigwin_login': "🔐 777 เข้าสู่ระบบ",
-            'six_login': "🔐 6 เข้าสู่ระบบ",
-            'results': "📊 ผลลัพธ์",
-            'bet_big': "🎲 เดิมพันใหญ่",
-            'bet_small': "🎯 เดิมพันเล็ก",
-            'bet_red': "🔴 เดิมพันสีแดง",
-            'bet_green': "🟢 เดิมพันสีเขียว",
-            'bet_violet': "🟣 เดิมพันสีม่วง",
-            'my_bets': "📈 การเดิมพันของฉัน",
-            'sl_layer': "📋 SL Layer",
-            'language': "🌐 ภาษา",
-            'run_bot': "🤖 เริ่มบอท",
-            'stop_bot': "🛑 หยุดบอท",
-            'bot_info': "🤖 ข้อมูลบอท",  # NEW: Bot Info button text
-        },
-        'urdu': {
-            'welcome': "🎰 **آٹو لاٹری بوٹ** 🎯\n\nخوش آمدید!",
-            'login_success': "✅ **لاگ ان کامیاب!**",
-            'bet_placed': "✅ شرط لگائی گئی!",
-            'balance': "💰 معلومات",
-            'language_set': "✅ **زبان اردو میں تبدیل کر دی گئی** 🇵🇰\n\nتمام بوٹ کے پیغامات اب اردو میں دکھائے جائیں گے۔",
-            'choose_language': "🌐 **اپنی زبان منتخب کریں**\n\nبراہ کرم اپنی ترجیحی زبان منتخب کریں:",
-            'bot_settings': "⚙️ بوٹ کی ترتیبات",
-            'random_big': "🎲 صرف بڑا",
-            'random_small': "🎯 صرف چھوٹا",
-            'random_bot': "🔄 بڑا/چھوٹا بے ترتیب",
-            'follow_bot': "📈 آخری نتیجہ کی پیروی کریں",
-            'bs_formula': "📋 BS فارمولا",
-            'colour_formula': "🔮 رنگ فارمولا",
-            'bot_stats': "📊 بوٹ کے اعداد و شمار",
-            'set_bet_sequence': "🔢 شرط کی ترتیب سیٹ کریں",
-            'profit_target': "🎯 منافع کا ہدف",
-            'loss_target': "🎯 نقصان کا ہدف",
-            'reset_stats': "🔄 اعداد و شمار دوبارہ ترتیب دیں",
-            'back_main_menu': "↩️ مین مینو",
-            'ck_login': "🔐 CK لاگ ان",
-            'bigwin_login': "🔐 777 لاگ ان",
-            'six_login': "🔐 6 لاگ ان",
-            'results': "📊 نتائج",
-            'bet_big': "🎲 بڑا شرط لگائیں",
-            'bet_small': "🎯 چھوٹا شرط لگائیں",
-            'bet_red': "🔴 سرخ شرط لگائیں",
-            'bet_green': "🟢 سبز شرط لگائیں",
-            'bet_violet': "🟣 بنفشی شرط لگائیں",
-            'my_bets': "📈 میری شرطیں",
-            'sl_layer': "📋 SL Layer",
-            'language': "🌐 زبان",
-            'run_bot': "🤖 بوٹ چلائیں",
-            'stop_bot': "🛑 بوٹ روکیں",
-            'bot_info': "🤖 بوٹ کی معلومات",  # NEW: Bot Info button text
+            'bot_info': "🤖 ဘော့အချက်အလက်",
+            
+            # BS Formula messages
+            'bs_formula_title': "📋 **BS ပုံသေနည်း မုဒ်**",
+            'bs_formula_description': "• 📋 BS ပုံသေနည်း - BS ပုံစံအတိုင်းလိုက်နာပါ (B,S သာ)",
+            'bs_pattern_set': "✅ **BS ပုံစံ သတ်မှတ်ပြီးပါပြီ!**",
+            'enter_bs_pattern': "🔢 **BS ပုံသေနည်းမုဒ်အတွက် BS ပုံစံ သတ်မှတ်ရန်**",
+            'bs_pattern_instructions': "BIG အတွက် B၊ SMALL အတွက် S ကိုသာသုံး၍ သင့် BS ပုံစံကို ထည့်သွင်းပါ:",
+            'current_bs_pattern': "👀 **လက်ရှိ BS ပုံစံ**",
+            'bs_pattern_cleared': "🗑️ **BS ပုံစံ ဖျက်လိုက်ပါပြီ**",
+            
+            # Colour Formula messages
+            'colour_formula_title': "🔮 **အရောင် ပုံသေနည်း မုဒ်**",
+            'colour_formula_description': "• 🔮 အရောင် ပုံသေနည်း - အရောင် ပုံစံအတိုင်းလိုက်နာပါ (G,R,V သာ)",
+            'colour_pattern_set': "✅ **အရောင် ပုံစံ သတ်မှတ်ပြီးပါပြီ!**",
+            'enter_colour_pattern': "🔢 **အရောင် ပုံသေနည်းမုဒ်အတွက် အရောင် ပုံစံ သတ်မှတ်ရန်**",
+            'colour_pattern_instructions': "အစိမ်းအတွက် G၊ အနီအတွက် R၊ ခရမ်းအတွက် V ကိုသာသုံး၍ သင့် အရောင် ပုံစံကို ထည့်သွင်းပါ:",
+            'current_colour_pattern': "👀 **လက်ရှိ အရောင် ပုံစံ**",
+            'colour_pattern_cleared': "🗑️ **အရောင် ပုံစံ ဖျက်လိုက်ပါပြီ**",
+            
+            # SL Layer messages
+            'sl_layer_title': "📋 **SL Layer ဘော့စနစ်**",
+            'sl_pattern_set': "✅ **SL ပုံစံ သတ်မှတ်ပြီးပါပြီ!**",
+            'enter_sl_pattern': "🔢 **SL ပုံစံ သတ်�မှတ်ရန်**",
+            'sl_pattern_instructions': "သင့် SL ပုံစံကို ထည့်သွင်းပါ (ကော်မာခြားထားသော နံပါတ်များ ၁-၅):",
+            'current_sl_pattern': "👀 **လက်ရှိ SL ပုံစံ**",
+            'sl_pattern_reset': "🔄 **SL ပုံစံ ပြန်လည်သတ်မှတ်ပြီးပါပြီ!**",
+            
+            # Bot Settings detailed messages
+            'random_big_set': "✅ **ကျပန်းမုဒ် သတ်မှတ်ပြီးပါပြီ**\n\n• 🎲 ကြီးတစ်ခုတည်း - အမြဲတမ်း ကြီးထိုးပါ",
+            'random_small_set': "✅ **ကျပန်းမုဒ် သတ်မှတ်ပြီးပါပြီ**\n\n• 🎯 သေးတစ်ခုတည်း - အမြဲတမ်း သေးထိုးပါ",
+            'random_bot_set': "✅ **ကျပန်းမုဒ် သတ်မှတ်ပြီးပါပြီ**\n\n• 🔄 ကြီး/သေး ကျပန်း - ကြီး/သေး ကျပန်းရွေးပါ",
+            'follow_bot_set': "✅ **ကျပန်းမုဒ် သတ်မှတ်ပြီးပါပြီ**\n\n• 📈 နောက်ဆုံးရလဒ်အတိုင်း - နောက်ဆုံးရလဒ်အတိုင်းလိုက်ပါ",
+            
+            # Error messages
+            'please_login': "❌ ကျေးဇူးပြု၍ လော့ဂ်အင် ဝင်ပါ!",
+            'insufficient_balance': "❌ ပိုက်ဆံမလုံလောက်ပါ!",
+            'bet_failed': "❌ ထိုးငွေမအောင်မြင်ပါ:",
+            'auto_login_failed': "❌ အလိုအလျောက်လော့ဂ်အင် မအောင်မြင်ပါ:",
+            'get_balance_error': "❌ ပိုက်ဆံရယူရာတွင် အမှားတစ်ခုဖြစ်နေသည်: {error}",
+            'bot_info_error': "❌ ဘော့အချက်အလက်များ ဖွင့်ရာတွင် အမှားတစ်ခုဖြစ်နေသည်။ ကျေးဇူးပြု၍ နောက်မှထပ်ကြိုးစားပါ။",
         }
     }
     
@@ -1276,7 +1348,7 @@ def get_main_keyboard(user_id=None):
         'language': get_localized_message('language', language),
         'run_bot': get_localized_message('run_bot', language),
         'stop_bot': get_localized_message('stop_bot', language),
-        'bot_info': get_localized_message('bot_info', language)  # NEW: Bot Info button
+        'bot_info': get_localized_message('bot_info', language)
     }
     
     keyboard = [
@@ -1286,7 +1358,7 @@ def get_main_keyboard(user_id=None):
         [KeyboardButton(button_texts['bet_red']), KeyboardButton(button_texts['bet_green']), KeyboardButton(button_texts['bet_violet'])],
         [KeyboardButton(button_texts['bot_settings']), KeyboardButton(button_texts['my_bets'])],
         [KeyboardButton(button_texts['sl_layer'])],
-         [KeyboardButton(button_texts['language']), KeyboardButton(button_texts['bot_info'])],  # NEW: Added Bot Info
+        [KeyboardButton(button_texts['language']), KeyboardButton(button_texts['bot_info'])],
         [KeyboardButton(button_texts['run_bot']), KeyboardButton(button_texts['stop_bot'])]
     ]
     return ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
@@ -1315,11 +1387,10 @@ def get_bot_settings_keyboard(user_id=None):
     return ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
 
 def get_language_keyboard():
-    """Keyboard for language selection"""
+    """Keyboard for language selection - ONLY ENGLISH AND BURMESE"""
     keyboard = [
         [KeyboardButton("🇺🇸 English"), KeyboardButton("🇲🇲 Burmese")],
-        [KeyboardButton("🇨🇳 Chinese"), KeyboardButton("🇹🇭 Thailand")],
-        [KeyboardButton("🇵🇰 Pakistan"), KeyboardButton("↩️ Main Menu")]
+        [KeyboardButton("↩️ Main Menu")]
     ]
     return ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
 
@@ -1332,24 +1403,42 @@ def get_sl_layer_keyboard():
     ]
     return ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
 
-def get_login_keyboard():
+def get_login_keyboard(user_id=None):
+    """Get login keyboard with localized text"""
+    if user_id:
+        language = get_user_language(user_id)
+    else:
+        language = 'english'
+        
     keyboard = [
         [KeyboardButton("📝 Enter Phone"), KeyboardButton("🔑 Enter Password")],
-        [KeyboardButton("🚪 Login Now"), KeyboardButton("↩️ Back")]
+        [KeyboardButton("🚪 Login Now"), KeyboardButton(get_localized_message('back_main_menu', language))]
     ]
     return ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
 
-def get_bs_pattern_keyboard():
+def get_bs_pattern_keyboard(user_id=None):
+    """Get BS pattern keyboard with localized text"""
+    if user_id:
+        language = get_user_language(user_id)
+    else:
+        language = 'english'
+        
     keyboard = [
         [KeyboardButton("🔢 Set BS Pattern"), KeyboardButton("👀 View BS Pattern")],
-        [KeyboardButton("🗑️ Clear BS Pattern"), KeyboardButton("↩️ Bot Settings")]
+        [KeyboardButton("🗑️ Clear BS Pattern"), KeyboardButton(get_localized_message('back_main_menu', language))]
     ]
     return ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
 
-def get_colour_pattern_keyboard():
+def get_colour_pattern_keyboard(user_id=None):
+    """Get Colour pattern keyboard with localized text"""
+    if user_id:
+        language = get_user_language(user_id)
+    else:
+        language = 'english'
+        
     keyboard = [
         [KeyboardButton("🔢 Set Colour Pattern"), KeyboardButton("👀 View Colour Pattern")],
-        [KeyboardButton("🗑️ Clear Colour Pattern"), KeyboardButton("↩️ Bot Settings")]
+        [KeyboardButton("🗑️ Clear Colour Pattern"), KeyboardButton(get_localized_message('back_main_menu', language))]
     ]
     return ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
 
@@ -1853,7 +1942,8 @@ async def auto_login_user(update: Update, context: ContextTypes.DEFAULT_TYPE, us
     if not user_session:
         return
     
-    loading_msg = await update.message.reply_text("🔄 Auto logging in...")
+    language = get_user_language(user_id)
+    loading_msg = await update.message.reply_text(get_localized_message('auto_login_loading', language))
     
     try:
         success, message, token = await user_session['api_instance'].login(
@@ -1869,33 +1959,25 @@ async def auto_login_user(update: Update, context: ContextTypes.DEFAULT_TYPE, us
             user_info = await user_session['api_instance'].get_user_info()
             user_id_display = user_info.get('userId', 'N/A')
             
-            current_amount = get_current_bet_amount(user_id)
-            bet_sequence = get_user_setting(user_id, 'bet_sequence', '100,300,700,1600,3200,7600,16000,32000')
-            current_index = get_user_setting(user_id, 'current_bet_index', 0)
-            
-            bot_session = get_bot_session(user_id)
-            
             platform_name = get_platform_name(user_session['platform'])
             
-            success_text = f"""
-✅ **Auto Login Successful!**
-
-**Platform:** {platform_name}
-**User ID:** {user_id_display}
-**Account:** {user_session['phone']}
-**Balance:** {balance:,.0f} K
-
-            """
+            success_text = get_localized_message('login_success_details', language).format(
+                platform=platform_name,
+                user_id=user_id_display,
+                phone=user_session['phone'],
+                balance=balance
+            )
+            
             await loading_msg.edit_text(success_text, parse_mode='Markdown')
             await update.message.reply_text("Choose an option:", reply_markup=get_main_keyboard(user_id))
             
         else:
-            await loading_msg.edit_text(f"❌ Auto login failed: {message}")
-            await update.message.reply_text("Please login manually:", reply_markup=get_login_keyboard())
+            await loading_msg.edit_text(f"❌ {get_localized_message('auto_login_failed', language)}: {message}")
+            await update.message.reply_text("Please login manually:", reply_markup=get_login_keyboard(user_id))
             
     except Exception as e:
-        await loading_msg.edit_text(f"❌ Auto login error: {str(e)}")
-        await update.message.reply_text("Please login manually:", reply_markup=get_login_keyboard())
+        await loading_msg.edit_text(f"❌ {get_localized_message('auto_login_failed', language)}: {str(e)}")
+        await update.message.reply_text("Please login manually:", reply_markup=get_login_keyboard(user_id))
 
 def get_platform_name(platform_code):
     """Get platform display name"""
@@ -1909,69 +1991,55 @@ def get_platform_name(platform_code):
 async def ck_login_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Start CK login process"""
     user_id = str(update.effective_user.id)
+    language = get_user_language(user_id)
     user_sessions[user_id]['step'] = 'login'
     user_sessions[user_id]['platform'] = 'ck'
     user_sessions[user_id]['api_instance'] = LotteryBot('ck')
     
-    login_guide = """
-🔐 **CK Lottery Login**
-
-Please follow these steps:
-
-1. Click '📝 Enter Phone' and send your phone number
-2. Click '🔑 Enter Password' and send your password  
-3. Click '🚪 Login Now' to authenticate
-
-**Your credentials will be saved for future use!**
-    """
-    await update.message.reply_text(login_guide, reply_markup=get_login_keyboard(), parse_mode='Markdown')
+    platform_name = get_platform_name('ck')
+    await update.message.reply_text(
+        get_localized_message('login_guide', language).format(platform=platform_name),
+        reply_markup=get_login_keyboard(user_id),
+        parse_mode='Markdown'
+    )
 
 async def bigwin_login_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Start 777 BigWin login process"""
     user_id = str(update.effective_user.id)
+    language = get_user_language(user_id)
     user_sessions[user_id]['step'] = 'login'
     user_sessions[user_id]['platform'] = '777'
     user_sessions[user_id]['api_instance'] = LotteryBot('777')
     
-    login_guide = """
-🔐 **777 Big Win Login**
-
-Please follow these steps:
-
-1. Click '📝 Enter Phone' and send your phone number
-2. Click '🔑 Enter Password' and send your password  
-3. Click '🚪 Login Now' to authenticate
-
-**Your credentials will be saved for future use!**
-    """
-    await update.message.reply_text(login_guide, reply_markup=get_login_keyboard(), parse_mode='Markdown')
+    platform_name = get_platform_name('777')
+    await update.message.reply_text(
+        get_localized_message('login_guide', language).format(platform=platform_name),
+        reply_markup=get_login_keyboard(user_id),
+        parse_mode='Markdown'
+    )
 
 async def six_login_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Start 6 Lottery login process"""
     user_id = str(update.effective_user.id)
+    language = get_user_language(user_id)
     user_sessions[user_id]['step'] = 'login'
     user_sessions[user_id]['platform'] = '6'
     user_sessions[user_id]['api_instance'] = LotteryBot('6')
     
-    login_guide = """
-🔐 **6 Lottery Login**
-
-Please follow these steps:
-
-1. Click '📝 Enter Phone' and send your phone number
-2. Click '🔑 Enter Password' and send your password  
-3. Click '🚪 Login Now' to authenticate
-
-**Your credentials will be saved for future use!**
-    """
-    await update.message.reply_text(login_guide, reply_markup=get_login_keyboard(), parse_mode='Markdown')
+    platform_name = get_platform_name('6')
+    await update.message.reply_text(
+        get_localized_message('login_guide', language).format(platform=platform_name),
+        reply_markup=get_login_keyboard(user_id),
+        parse_mode='Markdown'
+    )
 
 async def balance_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = str(update.effective_user.id)
+    language = get_user_language(user_id)
     user_session = user_sessions.get(user_id, {})
     
     if not user_session.get('logged_in'):
-        await update.message.reply_text("❌ Please login first!")
+        await update.message.reply_text(get_localized_message('please_login', language))
         return
     
     try:
@@ -1979,25 +2047,22 @@ async def balance_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         user_info = await user_session['api_instance'].get_user_info()
         user_id_display = user_info.get('userId', 'N/A')
         
-        current_amount = get_current_bet_amount(user_id)
-        bet_sequence = get_user_setting(user_id, 'bet_sequence', '100,300,700,1600,3200,7600,16000,32000')
-        current_index = get_user_setting(user_id, 'current_bet_index', 0)
-        
         platform_name = get_platform_name(user_session['platform'])
         
         balance_text = f"""
-💰 **Account Information**
+{get_localized_message('balance_title', language)}
 
-**Platform:** {platform_name}
-**User ID:** {user_id_display}
-**Balance:** {balance:,.0f} K
-**Status:** 🟢 LOGGED IN
-
-
+{get_localized_message('balance_details', language).format(
+    platform=platform_name,
+    user_id=user_id_display,
+    balance=balance
+)}
         """
         await update.message.reply_text(balance_text, parse_mode='Markdown')
     except Exception as e:
-        await update.message.reply_text(f"❌ Error getting balance: {str(e)}")
+        await update.message.reply_text(
+            get_localized_message('get_balance_error', language).format(error=str(e))
+        )
 
 async def results_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = str(update.effective_user.id)
@@ -2179,16 +2244,17 @@ Time: {datetime.now().strftime("%H:%M:%S")}
 async def bs_formula_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Show BS Formula menu and set mode"""
     user_id = str(update.effective_user.id)
+    language = get_user_language(user_id)
     patterns_data = get_formula_patterns(user_id)
     
-    bs_pattern_text = patterns_data['bs_pattern'] if patterns_data['bs_pattern'] else "Not set"
+    bs_pattern_text = patterns_data['bs_pattern'] if patterns_data['bs_pattern'] else get_localized_message('not_set', language)
     bs_current_index = patterns_data['bs_current_index']
     
     if patterns_data['bs_pattern']:
         bs_info = f"""
 ✅ **BS Formula Mode Activated**
 
-• 📋 BS Formula - Follow BS Pattern (B,S only)
+{get_localized_message('bs_formula_description', language)}
 
 **Current BS Pattern:** {bs_pattern_text}
 **Current Position:** {bs_current_index}
@@ -2202,9 +2268,9 @@ Choose an option to manage your BS pattern:
         """
     else:
         bs_info = f"""
-📋 **BS Formula Pattern Mode**
+{get_localized_message('bs_formula_title', language)}
 
-• 📋 BS Formula - Follow BS Pattern (B,S only)
+{get_localized_message('bs_formula_description', language)}
 
 **Current Status:** BS Pattern not set
 
@@ -2226,23 +2292,24 @@ Choose an option to manage your BS pattern:
 Choose an option to get started:
         """
     
-    await update.message.reply_text(bs_info, reply_markup=get_bs_pattern_keyboard(), parse_mode='Markdown')
+    await update.message.reply_text(bs_info, reply_markup=get_bs_pattern_keyboard(user_id), parse_mode='Markdown')
 
 async def set_bs_pattern_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Set BS Pattern and activate BS Formula mode"""
     user_id = str(update.effective_user.id)
+    language = get_user_language(user_id)
     user_sessions[user_id]['step'] = 'set_bs_pattern'
     
     await update.message.reply_text(
-        "🔢 **Set BS Pattern for BS Formula Mode**\n\n"
-        "• 📋 BS Formula - Follow BS Pattern (B,S only)\n\n"
-        "Enter your BS pattern using ONLY B for BIG and S for SMALL:\n\n"
+        f"{get_localized_message('enter_bs_pattern', language)}\n\n"
+        f"{get_localized_message('bs_formula_description', language)}\n\n"
+        f"{get_localized_message('bs_pattern_instructions', language)}\n\n"
         "**Allowed characters:** B, S only\n"
         "**Examples:**\n"
         "• B,S,B,B\n"
         "• S,S,B\n"
         "• B,B,B,S\n\n"
-        "The bot will follow this BS pattern sequentially in BS Formula mode.\n"
+        "The bot will follow this BS pattern in BS Formula mode.\n"
         "**Note:** Colour codes (R,G,V) are NOT allowed in BS Formula.\n\n"
         "Enter your BS pattern:"
     )
@@ -2250,6 +2317,7 @@ async def set_bs_pattern_command(update: Update, context: ContextTypes.DEFAULT_T
 async def view_bs_pattern_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """View current BS Pattern"""
     user_id = str(update.effective_user.id)
+    language = get_user_language(user_id)
     patterns_data = get_formula_patterns(user_id)
     
     if patterns_data['bs_pattern']:
@@ -2264,8 +2332,8 @@ async def view_bs_pattern_command(update: Update, context: ContextTypes.DEFAULT_
                 pattern_display += f"{bet_type} "
         
         await update.message.reply_text(
-            f"👀 **Current BS Pattern**\n\n"
-            f"• 📋 BS Formula - Follow BS Pattern (B,S only)\n\n"
+            f"{get_localized_message('current_bs_pattern', language)}\n\n"
+            f"{get_localized_message('bs_formula_description', language)}\n\n"
             f"**BS Pattern:** {patterns_data['bs_pattern']}\n"
             f"**Current Position:** {current_index}\n"
             f"**Progress:** {pattern_display}\n\n"
@@ -2274,8 +2342,8 @@ async def view_bs_pattern_command(update: Update, context: ContextTypes.DEFAULT_
         )
     else:
         await update.message.reply_text(
-            "❌ **No BS Pattern Set**\n\n"
-            "• 📋 BS Formula - Follow BS Pattern (B,S only)\n\n"
+            f"❌ **No BS Pattern Set**\n\n"
+            f"{get_localized_message('bs_formula_description', language)}\n\n"
             "BS Formula mode is active but no BS pattern is set.\n"
             "Please set a BS Pattern first to use this mode."
         )
@@ -2283,11 +2351,12 @@ async def view_bs_pattern_command(update: Update, context: ContextTypes.DEFAULT_
 async def clear_bs_pattern_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Clear BS Pattern"""
     user_id = str(update.effective_user.id)
+    language = get_user_language(user_id)
     
     if clear_formula_patterns(user_id, 'bs'):
         await update.message.reply_text(
-            "🗑️ **BS Pattern Cleared**\n\n"
-            "• 📋 BS Formula - Follow BS Pattern (B,S only)\n\n"
+            f"{get_localized_message('bs_pattern_cleared', language)}\n\n"
+            f"{get_localized_message('bs_formula_description', language)}\n\n"
             "BS Pattern has been cleared successfully!\n\n"
             "BS Formula mode is still active but no BS pattern is set.\n"
             "Set a new BS pattern to continue using BS Formula mode."
@@ -2298,16 +2367,17 @@ async def clear_bs_pattern_command(update: Update, context: ContextTypes.DEFAULT
 async def colour_formula_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Show Colour Formula menu and set mode"""
     user_id = str(update.effective_user.id)
+    language = get_user_language(user_id)
     patterns_data = get_formula_patterns(user_id)
     
-    colour_pattern_text = patterns_data['colour_pattern'] if patterns_data['colour_pattern'] else "Not set"
+    colour_pattern_text = patterns_data['colour_pattern'] if patterns_data['colour_pattern'] else get_localized_message('not_set', language)
     colour_current_index = patterns_data['colour_current_index']
     
     if patterns_data['colour_pattern']:
         colour_info = f"""
 🔮 **Colour Formula Mode Activated**
 
-• 🔮 Colour Formula - Follow Colour Pattern (G,R,V only)
+{get_localized_message('colour_formula_description', language)}
 
 **Current Colour Pattern:** {colour_pattern_text}
 **Current Position:** {colour_current_index}
@@ -2321,9 +2391,9 @@ Choose an option to manage your Colour pattern:
         """
     else:
         colour_info = f"""
-🔮 **Colour Formula Pattern Mode**
+{get_localized_message('colour_formula_title', language)}
 
-• 🔮 Colour Formula - Follow Colour Pattern (G,R,V only)
+{get_localized_message('colour_formula_description', language)}
 
 **Current Status:** Colour Pattern not set
 
@@ -2345,17 +2415,18 @@ Choose an option to manage your Colour pattern:
 Choose an option to get started:
         """
     
-    await update.message.reply_text(colour_info, reply_markup=get_colour_pattern_keyboard(), parse_mode='Markdown')
+    await update.message.reply_text(colour_info, reply_markup=get_colour_pattern_keyboard(user_id), parse_mode='Markdown')
 
 async def set_colour_pattern_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Set Colour Pattern and activate Colour Formula mode"""
     user_id = str(update.effective_user.id)
+    language = get_user_language(user_id)
     user_sessions[user_id]['step'] = 'set_colour_pattern'
     
     await update.message.reply_text(
-        "🔢 **Set Colour Pattern for Colour Formula Mode**\n\n"
-        "• 🔮 Colour Formula - Follow Colour Pattern (G,R,V only)\n\n"
-        "Enter your Colour pattern using ONLY:\n"
+        f"{get_localized_message('enter_colour_pattern', language)}\n\n"
+        f"{get_localized_message('colour_formula_description', language)}\n\n"
+        f"{get_localized_message('colour_pattern_instructions', language)}\n"
         "• G for 🟢 GREEN\n"  
         "• R for 🔴 RED\n"
         "• V for 🟣 VIOLET\n\n"
@@ -2372,6 +2443,7 @@ async def set_colour_pattern_command(update: Update, context: ContextTypes.DEFAU
 async def view_colour_pattern_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """View current Colour Pattern"""
     user_id = str(update.effective_user.id)
+    language = get_user_language(user_id)
     patterns_data = get_formula_patterns(user_id)
     
     if patterns_data['colour_pattern']:
@@ -2419,8 +2491,8 @@ async def view_colour_pattern_command(update: Update, context: ContextTypes.DEFA
             next_name = "UNKNOWN"
         
         await update.message.reply_text(
-            f"👀 **Current Colour Pattern**\n\n"
-            f"• 🔮 Colour Formula - Follow Colour Pattern (G,R,V only)\n\n"
+            f"{get_localized_message('current_colour_pattern', language)}\n\n"
+            f"{get_localized_message('colour_formula_description', language)}\n\n"
             f"**Colour Pattern:** {patterns_data['colour_pattern']}\n"
             f"**Current Position:** {current_index}\n"
             f"**Progress:** {pattern_display}\n\n"
@@ -2430,8 +2502,8 @@ async def view_colour_pattern_command(update: Update, context: ContextTypes.DEFA
         )
     else:
         await update.message.reply_text(
-            "❌ **No Colour Pattern Set**\n\n"
-            "• 🔮 Colour Formula - Follow Colour Pattern (G,R,V only)\n\n"
+            f"❌ **No Colour Pattern Set**\n\n"
+            f"{get_localized_message('colour_formula_description', language)}\n\n"
             "Colour Formula mode is active but no Colour pattern is set.\n"
             "Please set a Colour Pattern first to use this mode."
         )
@@ -2439,11 +2511,12 @@ async def view_colour_pattern_command(update: Update, context: ContextTypes.DEFA
 async def clear_colour_pattern_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Clear Colour Pattern"""
     user_id = str(update.effective_user.id)
+    language = get_user_language(user_id)
     
     if clear_formula_patterns(user_id, 'colour'):
         await update.message.reply_text(
-            "🗑️ **Colour Pattern Cleared**\n\n"
-            "• 🔮 Colour Formula - Follow Colour Pattern (G,R,V only)\n\n"
+            f"{get_localized_message('colour_pattern_cleared', language)}\n\n"
+            f"{get_localized_message('colour_formula_description', language)}\n\n"
             "Colour Pattern has been cleared successfully!\n\n"
             "Colour Formula mode is still active but no Colour pattern is set.\n"
             "Set a new Colour pattern to continue using Colour Formula mode."
@@ -2453,16 +2526,17 @@ async def clear_colour_pattern_command(update: Update, context: ContextTypes.DEF
 
 async def process_login(update: Update, context: ContextTypes.DEFAULT_TYPE, save_credentials=False):
     user_id = str(update.effective_user.id)
+    language = get_user_language(user_id)
     user_session = user_sessions.get(user_id)
     
     if not user_session or not user_session.get('phone') or not user_session.get('password'):
         await update.message.reply_text(
             "❌ Please enter bot phone number and password first!",
-            reply_markup=get_login_keyboard()
+            reply_markup=get_login_keyboard(user_id)
         )
         return
     
-    loading_msg = await update.message.reply_text("🔄 Logging in... Please wait.")
+    loading_msg = await update.message.reply_text(get_localized_message('manual_login_loading', language))
     
     try:
         success, message, token = await user_session['api_instance'].login(user_session['phone'], user_session['password'])
@@ -2480,37 +2554,32 @@ async def process_login(update: Update, context: ContextTypes.DEFAULT_TYPE, save
             user_info = await user_session['api_instance'].get_user_info()
             user_id_display = user_info.get('userId', 'N/A')
             
-            current_amount = get_current_bet_amount(user_id)
-            bet_sequence = get_user_setting(user_id, 'bet_sequence', '100,300,700,1600,3200,7600,16000,32000')
-            current_index = get_user_setting(user_id, 'current_bet_index', 0)
-            
             platform_name = get_platform_name(user_session['platform'])
             
-            success_text = f"""
-✅ **Login Successful!**
-
-**Platform:** {platform_name}
-**User ID:** {user_id_display}
-**Account:** {user_session['phone']}
-**Balance:** {balance:,.0f} K
-
-            """
+            success_text = get_localized_message('login_success_details', language).format(
+                platform=platform_name,
+                user_id=user_id_display,
+                phone=user_session['phone'],
+                balance=balance
+            )
+            
             await loading_msg.edit_text(success_text, parse_mode='Markdown')
             await update.message.reply_text("Choose an option:", reply_markup=get_main_keyboard(user_id))
             
         else:
-            await loading_msg.edit_text(f"❌ Login failed: {message}")
+            await loading_msg.edit_text(f"❌ {get_localized_message('auto_login_failed', language)}: {message}")
             
     except Exception as e:
-        await loading_msg.edit_text(f"❌ Login error: {str(e)}")
+        await loading_msg.edit_text(f"❌ {get_localized_message('auto_login_failed', language)}: {str(e)}")
 
 async def place_bet_handler(update: Update, context: ContextTypes.DEFAULT_TYPE, bet_type: int):
     """Handle bet placement"""
     user_id = str(update.effective_user.id)
+    language = get_user_language(user_id)
     user_session = user_sessions.get(user_id, {})
     
     if not user_session.get('logged_in'):
-        await update.message.reply_text("❌ Please login first!")
+        await update.message.reply_text(get_localized_message('please_login', language))
         return
     
     current_issue = await user_session['api_instance'].get_current_issue()
@@ -3137,13 +3206,13 @@ Choose your betting mode:
 async def set_random_big(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Set random mode to BIG only - DISABLE SL LAYER"""
     user_id = str(update.effective_user.id)
+    language = get_user_language(user_id)
     save_user_setting(user_id, 'random_betting', 'big')
     clear_formula_patterns(user_id)  # Clear both patterns
     save_sl_pattern(user_id, '1,2,3,4,5')
     
     await update.message.reply_text(
-        "✅ **Random Mode Set**\n\n"
-        "• 🎲 Random BIG - Always bet BIG\n\n"
+        f"{get_localized_message('random_big_set', language)}\n\n"
         "Bot will now always bet BIG in auto mode.\n"
         "❌ SL Layer has been disabled (BS/Colour Pattern mode required)."
     )
@@ -3151,13 +3220,13 @@ async def set_random_big(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def set_random_small(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Set random mode to SMALL only - DISABLE SL LAYER"""
     user_id = str(update.effective_user.id)
+    language = get_user_language(user_id)
     save_user_setting(user_id, 'random_betting', 'small')
     clear_formula_patterns(user_id)  # Clear both patterns
     save_sl_pattern(user_id, '1,2,3,4,5')
     
     await update.message.reply_text(
-        "✅ **Random Mode Set**\n\n"
-        "• 🎯 Random SMALL - Always bet SMALL\n\n"
+        f"{get_localized_message('random_small_set', language)}\n\n"
         "Bot will now always bet SMALL in auto mode.\n"
         "❌ SL Layer has been disabled (BS/Colour Pattern mode required)."
     )
@@ -3165,13 +3234,13 @@ async def set_random_small(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def set_random_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Set random mode to bot BIG and SMALL - DISABLE SL LAYER"""
     user_id = str(update.effective_user.id)
+    language = get_user_language(user_id)
     save_user_setting(user_id, 'random_betting', 'bot')
     clear_formula_patterns(user_id)  # Clear both patterns
     save_sl_pattern(user_id, '1,2,3,4,5')
     
     await update.message.reply_text(
-        "✅ **Random Mode Set**\n\n"
-        "• 🔄 Random Bot - Random BIG/SMALL\n\n"
+        f"{get_localized_message('random_bot_set', language)}\n\n"
         "Bot will now randomly choose between BIG and SMALL in auto mode.\n"
         "❌ SL Layer has been disabled (BS/Colour Pattern mode required)."
     )
@@ -3179,13 +3248,13 @@ async def set_random_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def set_follow_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Set random mode to FOLLOW BOT - DISABLE SL LAYER"""
     user_id = str(update.effective_user.id)
+    language = get_user_language(user_id)
     save_user_setting(user_id, 'random_betting', 'follow')
     clear_formula_patterns(user_id)  # Clear both patterns
     save_sl_pattern(user_id, '1,2,3,4,5')
     
     await update.message.reply_text(
-        "✅ **Random Mode Set**\n\n"
-        "• 📈 Follow Bot - Follow Last Result\n\n"
+        f"{get_localized_message('follow_bot_set', language)}\n\n"
         "Bot will now follow the last game result in auto mode.\n"
         "❌ SL Layer has been disabled (BS/Colour Pattern mode required)."
     )
@@ -3261,6 +3330,7 @@ async def reset_targets_command(update: Update, context: ContextTypes.DEFAULT_TY
 async def sl_layer_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Show SL Layer menu with AUTO ACTIVATION info"""
     user_id = str(update.effective_user.id)
+    language = get_user_language(user_id)
     
     sl_pattern_data = get_sl_pattern(user_id)
     sl_session = get_sl_bet_session(user_id)
@@ -3288,17 +3358,9 @@ async def sl_layer_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         activation_status.append("✅ BS/Colour Pattern ready")
     
-    balance = 0
-    try:
-        user_session = user_sessions.get(user_id, {})
-        if user_session.get('api_instance'):
-            balance = await user_session['api_instance'].get_balance()
-    except:
-        pass
-    
     if not bs_pattern_active and not colour_pattern_active:
         sl_info = f"""
-📋 **SL Layer Bot System**
+{get_localized_message('sl_layer_title', language)}
 
 🎯 **Auto Activation System**
 
@@ -3320,7 +3382,7 @@ async def sl_layer_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         overall_status = "🟢 READY FOR SL LAYER" if ready_for_sl else "🔴 Not Ready"
         
         sl_info = f"""
-📋 **SL Layer Bot System** - {overall_status}
+{get_localized_message('sl_layer_title', language)} - {overall_status}
 
 **{active_pattern_type} Mode:** 🟢 Active - {active_pattern}
 **SL Layer:** {'🟢 Will Auto-Activate' if ready_for_sl else '🔴 Cannot Activate'}
@@ -3364,6 +3426,7 @@ def get_next_sl_action(user_id):
 async def set_sl_pattern_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Set SL Pattern - WITH AUTO DETECTION EXPLANATION"""
     user_id = str(update.effective_user.id)
+    language = get_user_language(user_id)
     patterns_data = get_formula_patterns(user_id)
     
     if not patterns_data['bs_pattern'] and not patterns_data['colour_pattern']:
@@ -3375,10 +3438,6 @@ async def set_sl_pattern_command(update: Update, context: ContextTypes.DEFAULT_T
             "2. Click **📋 BS Formula** or **🔮 Colour Formula**\n"
             "3. Set a **BS Pattern** or **Colour Pattern**\n"
             "4. Then come back to set SL Pattern\n\n"
-            "✅ **Auto Detection System:**\n"
-            "• SL Layer will activate automatically when you run bot\n"
-            "• All conditions must be met: SL Pattern + BS/Colour Pattern\n"
-            "• Otherwise, Normal Bot mode will run automatically"
         )
         return
     
@@ -3387,9 +3446,9 @@ async def set_sl_pattern_command(update: Update, context: ContextTypes.DEFAULT_T
     current_pattern = get_sl_pattern(user_id)['pattern']
     
     await update.message.reply_text(
-        f"🔢 **Set SL Pattern**\n\n"
+        f"{get_localized_message('enter_sl_pattern', language)}\n\n"
         f"Current pattern: {current_pattern}\n\n"
-        "Enter your SL pattern (comma separated numbers 1-5):\n"
+        f"{get_localized_message('sl_pattern_instructions', language)}\n"
         "Example: 2,1,3 (Starts from SL 2 with WAIT BOT)\n"
         "Example: 2,1 (Starts from SL 2 with WAIT BOT)\n"
         "Example: 1,2,3 (Starts from SL 1 with BETTING)\n\n"
@@ -3403,6 +3462,7 @@ async def set_sl_pattern_command(update: Update, context: ContextTypes.DEFAULT_T
 async def view_sl_pattern_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """View current SL Pattern"""
     user_id = str(update.effective_user.id)
+    language = get_user_language(user_id)
     sl_pattern_data = get_sl_pattern(user_id)
     sl_session = get_sl_bet_session(user_id)
     patterns_data = get_formula_patterns(user_id)
@@ -3428,7 +3488,7 @@ async def view_sl_pattern_command(update: Update, context: ContextTypes.DEFAULT_
     colour_status = "🟢 Active" if patterns_data['colour_pattern'] else "🔴 Inactive"
     
     await update.message.reply_text(
-        f"👀 **Current SL Pattern**\n\n"
+        f"{get_localized_message('current_sl_pattern', language)}\n\n"
         f"**BS Pattern Mode:** {bs_status}\n"
         f"**Colour Pattern Mode:** {colour_status}\n"
         f"**SL Pattern:** {pattern_text}\n"
@@ -3445,11 +3505,12 @@ async def view_sl_pattern_command(update: Update, context: ContextTypes.DEFAULT_
 async def reset_sl_pattern_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Reset SL Pattern to initial state"""
     user_id = str(update.effective_user.id)
+    language = get_user_language(user_id)
     
     if reset_sl_pattern(user_id):
         save_sl_bet_session(user_id, False, '', '', 0, 0)
         await update.message.reply_text(
-            "🔄 **SL Pattern Reset!**\n\n"
+            f"{get_localized_message('sl_pattern_reset', language)}\n\n"
             "SL Pattern has been reset to initial state.\n"
             "Starting from SL 1 with current pattern."
         )
@@ -4241,6 +4302,7 @@ async def force_wait_bot_command(update: Update, context: ContextTypes.DEFAULT_T
 async def bot_info_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Show comprehensive bot information"""
     user_id = str(update.effective_user.id)
+    language = get_user_language(user_id)
     user_session = user_sessions.get(user_id, {})
     
     try:
@@ -4252,7 +4314,7 @@ async def bot_info_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
             user_info = await user_session['api_instance'].get_user_info()
         
         user_id_display = user_info.get('userId', 'N/A')
-        phone = user_session.get('phone', 'Not logged in')
+        phone = user_session.get('phone', get_localized_message('not_set', language))
         
         # Get bot settings
         platform = user_session.get('platform', 'ck')
@@ -4266,12 +4328,12 @@ async def bot_info_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         
         # Get formula patterns
         patterns_data = get_formula_patterns(user_id)
-        bs_pattern = patterns_data['bs_pattern'] if patterns_data['bs_pattern'] else "Not set"
-        colour_pattern = patterns_data['colour_pattern'] if patterns_data['colour_pattern'] else "Not set"
+        bs_pattern = patterns_data['bs_pattern'] if patterns_data['bs_pattern'] else get_localized_message('not_set', language)
+        colour_pattern = patterns_data['colour_pattern'] if patterns_data['colour_pattern'] else get_localized_message('not_set', language)
         
         # Get SL pattern
         sl_pattern_data = get_sl_pattern(user_id)
-        sl_pattern = sl_pattern_data['pattern'] if sl_pattern_data['pattern'] else "Not set"
+        sl_pattern = sl_pattern_data['pattern'] if sl_pattern_data['pattern'] else get_localized_message('not_set', language)
         
         # Determine current mode
         if patterns_data['bs_pattern']:
@@ -4289,40 +4351,50 @@ async def bot_info_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Bot status
         bot_status = "🟢 RUNNING" if bot_session['is_running'] else "🔴 STOPPED"
         
+        # Target settings
+        profit_target = get_user_setting(user_id, 'profit_target', 0)
+        loss_target = get_user_setting(user_id, 'loss_target', 0)
+        
+        profit_target_text = f"{profit_target:,} K" if profit_target > 0 else get_localized_message('disabled', language)
+        loss_target_text = f"{loss_target:,} K" if loss_target > 0 else get_localized_message('disabled', language)
+        
         # Create bot info message
         bot_info_text = f"""
-🤖 **BOT INFORMATION**
+{get_localized_message('bot_info_title', language)}
 
-👤 **User Info:**
-• User ID: `{user_id_display}`
-• Phone: `{phone}`
-• Platform: {platform_name}
-• Balance: {balance:,.0f} K
+{get_localized_message('user_info_section', language)}
+• {get_localized_message('user_id', language)}: `{user_id_display}`
+• {get_localized_message('phone', language)}: `{phone}`
+• {get_localized_message('platform', language)}: {platform_name}
+• {get_localized_message('balance', language)}: {balance:,.0f} K
 
-⚙️ **Bot Settings:**
-• Mode: {mode_text}
-• Status: {bot_status}
-• Bet Sequence: {bet_sequence}
-• Current Bet: {current_amount} K (Step {current_index + 1})
+{get_localized_message('bot_settings_section', language)}
+• {get_localized_message('mode', language)}: {mode_text}
+• {get_localized_message('status', language)}: {bot_status}
+• {get_localized_message('bet_sequence', language)}: {bet_sequence}
+• {get_localized_message('current_bet', language)}: {current_amount} K (Step {current_index + 1})
 
-📊 **Bot Statistics:**
-• Session Profit: {bot_session['session_profit']:,} K
-• Session Loss: {bot_session['session_loss']:,} K
-• Net Profit: {bot_session['session_profit'] - bot_session['session_loss']:,} K
-• Total Bets: {bot_session['total_bets']}
+{get_localized_message('target_settings_section', language)}
+• {get_localized_message('profit_target', language)}: {profit_target_text}
+• {get_localized_message('loss_target', language)}: {loss_target_text}
 
-🎯 **Patterns:**
-• BS Pattern: {bs_pattern}
-• Colour Pattern: {colour_pattern}
-• SL Pattern: {sl_pattern}
+{get_localized_message('bot_stats_section', language)}
+• {get_localized_message('session_profit', language)}: {bot_session['session_profit']:,} K
+• {get_localized_message('session_loss', language)}: {bot_session['session_loss']:,} K
+• {get_localized_message('net_profit', language)}: {bot_session['session_profit'] - bot_session['session_loss']:,} K
+• {get_localized_message('total_bets', language)}: {bot_session['total_bets']}
 
+{get_localized_message('patterns_section', language)}
+• {get_localized_message('bs_pattern', language)}: {bs_pattern}
+• {get_localized_message('colour_pattern', language)}: {colour_pattern}
+• {get_localized_message('sl_pattern', language)}: {sl_pattern}
         """
         
         await update.message.reply_text(bot_info_text, parse_mode='Markdown')
         
     except Exception as e:
         logger.error(f"Error in bot_info_command: {e}")
-        await update.message.reply_text("❌ Error loading bot information. Please try again.")
+        await update.message.reply_text(get_localized_message('bot_info_error', language))
 
 # Language Functions
 async def language_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -4333,17 +4405,14 @@ async def language_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     current_language = get_user_language(user_id)
     
     language_info = f"""
-🌐 **Choose Your Language**
+🌐 **{get_localized_message('choose_language', get_user_language(user_id))}**
 
 **Current Language:** {current_language.title()}
 
 Please select your preferred language:
 
 • 🇺🇸 English - English language
-• 🇲🇲 Burmese - မြန်မာစာ  
-• 🇨🇳 Chinese - 中文
-• 🇹🇭 Thailand - ภาษาไทย
-• 🇵🇰 Pakistan - اردو
+• 🇲🇲 Burmese - မြန်မာစာ
 
 Select your language below:
     """
@@ -4356,8 +4425,7 @@ async def set_english_language(update: Update, context: ContextTypes.DEFAULT_TYP
     save_user_setting(user_id, 'language', 'english')
     
     await update.message.reply_text(
-        "✅ **Language set to English** 🇺🇸\n\n"
-        "All bot messages will now be displayed in English.",
+        get_localized_message('language_set', 'english'),
         reply_markup=get_main_keyboard(user_id)
     )
 
@@ -4367,41 +4435,7 @@ async def set_burmese_language(update: Update, context: ContextTypes.DEFAULT_TYP
     save_user_setting(user_id, 'language', 'burmese')
     
     await update.message.reply_text(
-        "✅ **ဘာသာစကား ပြောင်းလဲပြီးပါပြီ** 🇲🇲\n\n"
-        "ဘော့သတင်းစကားအားလုံးကို မြန်မာဘာသာဖြင့် ပြသပေးပါမည်။",
-        reply_markup=get_main_keyboard(user_id)
-    )
-
-async def set_chinese_language(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Set language to Chinese"""
-    user_id = str(update.effective_user.id)
-    save_user_setting(user_id, 'language', 'chinese')
-    
-    await update.message.reply_text(
-        "✅ **语言已设置为中文** 🇨🇳\n\n"
-        "所有机器人消息现在将以中文显示。",
-        reply_markup=get_main_keyboard(user_id)
-    )
-
-async def set_thai_language(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Set language to Thai"""
-    user_id = str(update.effective_user.id)
-    save_user_setting(user_id, 'language', 'thai')
-    
-    await update.message.reply_text(
-        "✅ **ตั้งค่าภาษาเป็นไทยแล้ว** 🇹🇭\n\n"
-        "ข้อความบอททั้งหมดจะแสดงเป็นภาษาไทย",
-        reply_markup=get_main_keyboard(user_id)
-    )
-
-async def set_pakistan_language(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Set language to Pakistan/Urdu"""
-    user_id = str(update.effective_user.id)
-    save_user_setting(user_id, 'language', 'urdu')
-    
-    await update.message.reply_text(
-        "✅ **زبان اردو میں تبدیل کر دی گئی** 🇵🇰\n\n"
-        "تمام بوٹ کے پیغامات اب اردو میں دکھائے جائیں گے۔",
+        get_localized_message('language_set', 'burmese'),
         reply_markup=get_main_keyboard(user_id)
     )
 
@@ -4454,7 +4488,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         'language': get_localized_message('language', language),
         'run_bot': get_localized_message('run_bot', language),
         'stop_bot': get_localized_message('stop_bot', language),
-        'bot_info': get_localized_message('bot_info', language),  # NEW: Bot Info
+        'bot_info': get_localized_message('bot_info', language),
     }
     
     # Debug: Print received text and localized texts for troubleshooting
@@ -4471,8 +4505,11 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         user_session['step'] = 'login'
         platform_name = get_platform_name(user_session.get('platform', 'ck'))
         await update.message.reply_text(
-            f"✅ Phone number saved: {text}\nPlatform: {platform_name}\nNow please enter your password:",
-            reply_markup=get_login_keyboard()
+            get_localized_message('phone_saved', language).format(
+                phone=text, 
+                platform=platform_name
+            ),
+            reply_markup=get_login_keyboard(user_id)
         )
         
     elif user_session['step'] == 'login_password':
@@ -4480,8 +4517,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         user_session['step'] = 'login'
         platform_name = get_platform_name(user_session.get('platform', 'ck'))
         await update.message.reply_text(
-            f"✅ Password saved!\nPlatform: {platform_name}\nClick '🚪 Login Now' to authenticate and save credentials.",
-            reply_markup=get_login_keyboard()
+            get_localized_message('password_saved', language).format(platform=platform_name),
+            reply_markup=get_login_keyboard(user_id)
         )
         
     elif user_session['step'] == 'set_bet_sequence':
@@ -4576,7 +4613,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     f"Starting from first position.\n\n"
                     f"Bot will now follow this BS pattern in BS Formula mode.\n"
                     f"**Note:** Only B (BIG) and S (SMALL) are allowed in BS Formula.",
-                    reply_markup=get_bs_pattern_keyboard()
+                    reply_markup=get_bs_pattern_keyboard(user_id)
                 )
             else:
                 await update.message.reply_text("❌ Error saving BS pattern. Please try again.")
@@ -4614,7 +4651,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     f"• V = 🟣 VIOLET\n\n"
                     f"Bot will now follow this Colour pattern in Colour Formula mode.\n"
                     f"**Note:** Only G (GREEN), R (RED), and V (VIOLET) are allowed in Colour Formula.",
-                    reply_markup=get_colour_pattern_keyboard()
+                    reply_markup=get_colour_pattern_keyboard(user_id)
                 )
             else:
                 await update.message.reply_text("❌ Error saving Colour pattern. Please try again.")
@@ -4739,17 +4776,17 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif text == localized_texts['stop_bot'] or text == "🛑 Stop Bot":
         await stop_bot_command(update, context)
         
-    elif text == localized_texts['bot_info'] or text == "🤖 Bot Info":  # NEW: Bot Info
+    elif text == localized_texts['bot_info'] or text == "🤖 Bot Info":
         await bot_info_command(update, context)
     
     # ===== LOGIN MENU HANDLING =====
     elif text == "📝 Enter Phone":
         user_sessions[user_id]['step'] = 'login_phone'
-        await update.message.reply_text("Please enter your phone number (without country code):")
+        await update.message.reply_text(get_localized_message('enter_phone', language))
         
     elif text == "🔑 Enter Password":
         user_sessions[user_id]['step'] = 'login_password'
-        await update.message.reply_text("Please enter your password:")
+        await update.message.reply_text(get_localized_message('enter_password', language))
         
     elif text == "🚪 Login Now":
         await process_login(update, context, save_credentials=True)
@@ -4761,14 +4798,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif text == "🇲🇲 Burmese":
         await set_burmese_language(update, context)
         
-    elif text == "🇨🇳 Chinese":
-        await set_chinese_language(update, context)
-        
-    elif text == "🇹🇭 Thailand":
-        await set_thai_language(update, context)
-        
-    elif text == "🇵🇰 Pakistan":
-        await set_pakistan_language(update, context)
+    elif text == "↩️ Main Menu":
+        user_session['step'] = 'main'
+        await update.message.reply_text("🏠 Main Menu", reply_markup=get_main_keyboard(user_id))
     
     # ===== BACKWARD COMPATIBILITY - English buttons =====
     elif text == "🎲 Random BIG":
@@ -4809,7 +4841,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif text == "🔄 Reset Stats":
         await reset_bot_stats(update, context)
         
-    elif text == "🤖 Bot Info":  # NEW: Bot Info backward compatibility
+    elif text == "🤖 Bot Info":
         await bot_info_command(update, context)
     
     # ===== OTHER BUTTONS =====
@@ -4891,7 +4923,7 @@ def main():
     logger.info("Auto Lottery Bot starting...")
     print("🤖 Auto Lottery Bot is running...")
     print("🔧 Database migration system: Enabled")
-    print("🌐 Multi-language support: Enabled")
+    print("🌐 Multi-language support: Enabled (English/Burmese)")
     print("🔄 Auto-fix missing database columns: Enabled")
     print("🎰 Features: Wait for Win/Loss before next bet")
     print("🔧 Modes: BIG Only, SMALL Only, Random Bot, Follow Bot")
@@ -4920,8 +4952,8 @@ def main():
     print("✅ FIXED: Current Step 1 ကနေ Loss ဖြစ်ရင် Current Step 2 ဖြစ်အောင်ပြင်ဆင်ခြင်း")
     print("✅ FIXED: Bet Sequence ဇကျော်နေတဲ့ ပြဿနာ - 10K ပြီးရင် 30K ထိုးမယ်")
     print("🎯 NEW: Default Bet Sequence: 100,300,700,1600,3200,7600,16000,32000")
-    print("🌐 NEW: Language Selection - English, Burmese, Chinese, Thailand, Pakistan")
-    print("🔄 NEW: Dynamic Keyboard Localization - Bot Settings menu changes with language")
+    print("🌐 NEW: Language Selection - English, Burmese")
+    print("🔄 NEW: Dynamic Keyboard Localization - All menus change with language")
     print("🆕 NEW: Bot Info button - Comprehensive bot information display")
     print("✅ FIXED: Balance check removed - Users can run bot with any balance")
     print("⏹️  Press Ctrl+C to stop.")
